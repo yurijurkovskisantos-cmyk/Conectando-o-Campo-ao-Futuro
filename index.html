@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal AgroTech | Inteligência e Sustentabilidade no Campo</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(2, 6, 23, 0.92) 100%);
+            --glass-bg: rgba(30, 41, 59, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(15, 23, 42, 0.75);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-green: #10b981;
+            --primary-green-hover: #059669;
+            --tech-blue: #3b82f6;
+            --tech-blue-hover: #2563eb;
+            --accent-orange: #f59e0b;
+            --font-base: 16px;
+            --shadow-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .modo-claro {
+            --bg-gradient: linear-gradient(135deg, rgba(248, 250, 252, 0.9) 0%, rgba(226, 232, 240, 0.95) 100%);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(15, 23, 42, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary-green: #059669;
+            --tech-blue: #2563eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html {
+            font-size: var(--font-base);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background 0.5s ease, color 0.5s ease;
+            line-height: 1.7;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* IMAGEM DE FUNDO REALISTA DA PLANTAÇÃO (AGRICULTURA DE PRECISÃO) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            /* Imagem profissional de campo agrícola tecnológico em alta definição */
+            background-image: url('https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.28; /* Opacidade perfeita para aparecer o fundo sem atrapalhar a leitura */
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Efeito de desfoque atrás dos painéis para dar profundidade à imagem */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
+        }
+
+        /* BARRA DE ACESSIBILIDADE */
+        .accessibility-bar {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 10px 40px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-access {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-access:hover {
+            background: var(--tech-blue);
+            border-color: var(--tech-blue);
+            transform: translateY(-1px);
+        }
+
+        /* HERO HEADER */
+        header {
+            padding: 100px 20px 60px 20px;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+        }
+
+        .badge-agrinho {
+            background: linear-gradient(90deg, var(--primary-green), var(--tech-blue));
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header h1 span {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-main);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* CONTAINER DA ESTRUTURA */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin: 60px 0 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .section-title i {
+            color: var(--primary-green);
+        }
+
+        /* BLOCOS EM GLASSMORPHISM */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-glow);
+            margin-bottom: 40px;
+        }
+
+        /* DASHBOARD METRICS */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-green);
+        }
+
+        .metric-card.blue::before { background: var(--tech-blue); }
+        .metric-card.orange::before { background: var(--accent-orange); }
+
+        .metric-card i {
+            font-size: 28px; color: var(--text-muted); position: absolute; top: 30px; right: 30px;
+        }
+
+        .metric-card h3 {
+            font-size: 14px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 10px;
+        }
+
+        .metric-card .number {
+            font-size: 32px; font-weight: 800; color: var(--text-main); line-height: 1; margin-bottom: 8px;
+        }
+
+        /* GRID ESG */
+        .esg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .esg-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 18px;
+            border-top: 4px solid var(--text-muted);
+        }
+
+        .esg-card.e { border-top-color: #10b981; }
+        .esg-card.s { border-top-color: #3b82f6; }
+        .esg-card.g { border-top-color: #f59e0b; }
+
+        .esg-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .esg-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .esg-card ul li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-main);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .esg-card ul li::before {
+            content: "•";
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 18px;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        /* LINHA DO TEMPO DO PARANÁ */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: var(--glass-border);
+            top: 0; bottom: 0; left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: transparent;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            right: -8px; top: 25px;
+            border-radius: 50%;
+            background-color: var(--primary-green);
+            z-index: 1;
+            box-shadow: 0 0 10px var(--primary-green);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .right::after { left: -8px; }
+
+        .timeline-content {
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            border-radius: 14px;
+        }
+
+        .timeline-content h3 {
+            font-size: 18px;
+            color: var(--tech-blue);
+            margin-bottom: 5px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 23px; }
+            .right { left: 0; }
+        }
+
+        /* GRID DE DOIS LADOS */
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-layout { grid-template-columns: 1fr; }
+        }
+
+        /* ABAS E CONTEÚDO */
+        .tabs-nav {
+            display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent; color: var(--text-muted); border: none; padding: 10px 20px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: rgba(59, 130, 246, 0.1); color: var(--tech-blue);
+        }
+
+        .tab-content {
+            display: none; animation: fadeIn 0.5s ease;
+        }
+
+        /* CALCULADORA AVANÇADA */
+        .calc-wrapper {
+            display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin: 0 auto;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%; padding: 16px 20px; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); font-size: 16px; font-weight: 600; outline: none; transition: all 0.3s;
+        }
+
+        .input-group input:focus { border-color: var(--primary-green); box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-hover) 100%); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: transform 0.2s;
+        }
+
+        .btn-submit:hover { transform: scale(1.02); }
+
+        /* QUIZ GAME DESIGN */
+        .quiz-container {
+            background: var(--card-bg); border-radius: 16px; padding: 30px; border: 1px solid var(--glass-border);
+        }
+
+        .option-btn {
+            width: 100%; text-align: left; padding: 16px 20px; margin-top: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+        }
+
+        .option-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted); }
+
+        /* LINKS REALISTAS */
+        .resource-link {
+            display: flex; align-items: center; justify-content: space-between; padding: 20px; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 14px; text-decoration: none; color: var(--text-main); font-weight: 600; margin-bottom: 12px; transition: all 0.3s;
+        }
+
+        .resource-link:hover { border-color: var(--tech-blue); background: rgba(59, 130, 246, 0.05); transform: translateX(5px); }
+
+        /* FOOTER EXTENSO */
+        footer {
+            background: #020617; border-top: 1px solid var(--glass-border); padding: 60px 20px; text-align: center; color: var(--text-muted); font-size: 14px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="accessibility-bar" role="toolbar" aria-label="Acessibilidade">
+        <button class="btn-access" onclick="readPageContent()"><i class="fa-solid fa-volume-high"></i> Ouvir Conteúdo</button>
+        <button class="btn-access" onclick="adjustFont(1)"><i class="fa-solid fa-text-height"></i> Aumentar Fonte</button>
+        <button class="btn-access" onclick="adjustFont(-1)"><i class="fa-solid fa-text-height"></i> Diminuir</button>
+        <button class="btn-access" id="theme-toggle" onclick="toggleTheme()"><i class="fa-solid fa-circle-half-stroke"></i> Modo Claro</button>
+    </div>
+
+    <header id="header-section">
+        <div class="badge-agrinho">Categoria: Escola Agrícola & Tecnologia</div>
+        <h1>Portal <span>AgroTech</span></h1>
+        <p>A convergência entre a inteligência computacional e a sustentabilidade para liderar a produção de alimentos no ecossistema do Agrinho 2026.</p>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Indicadores do Campo Conectado</h2>
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <i class="fa-solid fa-droplet-slash"></i>
+                <h3>Economia Hídrica</h3>
+                <div class="number">35%</div>
+                <p style="color: var(--text-muted); font-size: 13px;">Redução no desperdício via microirrigação por sensores IoT de precisão.</p>
+            </div>
+            <div class="metric-card blue">
+                <i class="fa-solid fa-seedling"></i>
+                <h3>Produtividade Vertical</h3>
+                <div class="number">+22%</div>
+                <p style="color: var(--text-muted); font-size: 13px;">Aumento de sacas por hectare sem necessidade de abertura de novas áreas florestais.</p>
+            </div>
+            <div class="metric-card orange">
+                <i class="fa-solid fa-cloud-sun"></i>
+                <h3>Crédito de Carbono</h3>
+                <div class="number">1.8t</div>
+                <p style="color: var(--text-muted); font-size: 13px;">Créditos retidos por hectare ao ano com plantio direto baseado em inteligência de solo.</p>
+            </div>
+        </section>
+
+        <h2 class="section-title"><i class="fa-solid fa-shield-halved"></i> Compromisso Governamental e Corporativo (ESG)</h2>
+        <section class="glass-panel esg-grid">
+            <div class="esg-card e">
+                <h3><span style="color:#10b981;">E</span> - Ambiental (Environmental)</h3>
+                <ul>
+                    <li><strong>Drones de Pulverização:</strong> Aplicação cirúrgica de insumos, reduzindo o desperdício químico em até 80% na lavoura.</li>
+                    <li><strong>Preservação de Matas Ciliares:</strong> Uso de imagens de satélite para monitorar e delimitar Áreas de Preservação Permanente (APPs).</li>
+                    <li><strong>Energia Limpa:</strong> Crescimento de fazendas autossuficientes alimentadas por painéis solares e biomassa.</li>
+                </ul>
+            </div>
+            <div class="esg-card s">
+                <h3><span style="color:#3b82f6;">S</span> - Social</h3>
+                <ul>
+                    <li><strong>Inclusão Digital no Campo:</strong> Treinamento de trabalhadores rurais para pilotagem de drones e leitura de telemetria.</li>
+                    <li><strong>Sucessão Familiar Solidificada:</strong> Jovens retornando às propriedades atraídos pela tecnologia e conectividade.</li>
+                    <li><strong>Segurança Operacional:</strong> Redução do contato humano com defensivos agrícolas através da automação robótica.</li>
+                </ul>
+            </div>
+            <div class="esg-card g">
+                <h3><span style="color:#f59e0b;">G</span> - Governança</h3>
+                <ul>
+                    <li><strong>Rastreabilidade de Cadeia:</strong> Uso de sistemas em nuvem para provar a origem sustentável do grão para exportação.</li>
+                    <li><strong>Gestão Baseada em Dados:</strong> Sensores financeiros integrados ao estoque, evitando desperdício de capital.</li>
+                    <li><strong>Cumprimento do CAR:</strong> Alinhamento digital em tempo real com o Cadastro Ambiental Rural brasileiro.</li>
+                </ul>
+            </div>
+        </section>
+
+        <h2 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> A Evolução Tecnológica no Paraná</h2>
+        <section class="glass-panel">
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>Passado Puramente Manual</h3>
+                        <p style="color: var(--text-muted); font-size: 14px;">Dependência total da intuição climática, tração animal e manejo braçal severo. Riscos de pragas devastadoras sem monitoramento preventivo.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>Presente Conectado (2026)</h3>
+                        <p style="color: var(--text-muted); font-size: 14px;">Tratores autônomos guiados por GPS centimétrico e sensores IoT de solo comunicando via satélite com aplicativos móveis na palma do produtor.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>Futuro Orientado por I.A.</h3>
+                        <p style="color: var(--text-muted); font-size: 14px;">Modelos preditivos de Inteligência Artificial antecipando climas severos e pragas com semanas de folga, gerando desperdício zero de recursos naturais.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard-layout">
+            
+            <div>
+                <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Inteligência Aplicada</h2>
+                <div class="glass-panel">
+                    <div class="tabs-nav" role="tablist">
+                        <button class="tab-btn active" id="t1" onclick="switchTab(1)">Drones Spectrais</button>
+                        <button class="tab-btn" id="t2" onclick="switchTab(2)">Maquinário Autônomo</button>
+                        <button class="tab-btn" id="t3" onclick="switchTab(3)">Sensores IoT</button>
+                    </div>
+
+                    <div class="tab-content" id="c1" style="display: block;">
+                        <h3 style="color: var(--primary-green); margin-bottom: 10px;">Monitoramento por Imagens NDVI</h3>
+                        <p style="color: var(--text-muted);">Drones equipados com câmeras multiespectrais capturam comprimentos de onda invisíveis ao olho humano. O processamento de dados gera mapas de índice de vegetação (NDVI), detectando estresse hídrico e focos de lagartas com precisão antes que seja visualmente perceptível.</p>
+                    </div>
+                    <div class="tab-content" id="c2">
+                        <h3 style="color: var(--tech-blue); margin-bottom: 10px;">Pilotos Automáticos e Redução de Combustível</h3>
+                        <p style="color: var(--text-muted);">Tratores guiados por antenas RTK operam com erro de margem menor que 2 centímetros. Isso zera a sobreposição de defensivos e sementes nas linhas de plantio, diminuindo as horas de motor ligadas e poupando emissões de diesel.</p>
+                    </div>
+                    <div class="tab-content" id="c3">
+                        <h3 style="color: var(--accent-orange); margin-bottom: 10px;">Estações Sólidas de Análise Química</h3>
+                        <p style="color: var(--text-muted);">Sondas enterradas transmitem via protocolo LoRaWAN dados contínuos de salinidade, temperatura e potencial mátrico da terra. O sistema aciona diretamente os canais de fertirrigação automática apenas nos quadrantes necessitados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Evolução Produtiva</h2>
+                <div class="glass-panel" style="padding: 20px;">
+                    <canvas id="prodChart" style="width: 100%; height: 280px;"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="section-title"><i class="fa-solid fa-calculator"></i> Simulador de Eficiência Ecológica</h2>
+        <section class="glass-panel" style="text-align: center;">
+            <p style="color: var(--text-muted); margin-bottom: 25px;">Monitore o impacto real. Insira a dimensão de terra cultivada para prever a preservação hídrica anual gerada pela agricultura computacional.</p>
+            <div class="calc-wrapper">
+                <div class="input-group">
+                    <input type="number" id="input-area" placeholder="Quantidade de Hectares (ha)">
+                </div>
+                <button class="btn-submit" onclick="runSimulation()">Calcular Impacto de Recursos</button>
+                <div id="sim-result" style="font-size: 18px; font-weight: 700; color: var(--primary-green); margin-top: 15px; min-height: 28px;"></div>
+            </div>
+        </section>
+
+        <h2 class="section-title"><i class="fa-solid fa-gamepad"></i> Teste de Conhecimento Agrinho</h2>
+        <section class="glass-panel">
+            <div class="quiz-container">
+                <div id="q-stage1">
+                    <span style="color: var(--tech-blue); font-weight: 700; font-size: 13px; text-transform: uppercase;">Pergunta 1 de 3</span>
+                    <h3 style="margin: 10px 0 20px 0; font-size: 18px;">Qual o impacto direto da Agricultura de Precisão nas metas globais de sustentabilidade (ODS)?</h3>
+                    <button class="option-btn" onclick="checkQuiz(1, true, this)">A) Produzir mais alimentos por metro quadrado, evitando expansão sobre florestas nativas.</button>
+                    <button class="option-btn" onclick="checkQuiz(1, false, this)">B) Aumentar o uso indiscriminado de água para acelerar ciclos de crescimento.</button>
+                </div>
+                <div id="q-stage2" style="display: none;">
+                    <span style="color: var(--tech-blue); font-weight: 700; font-size: 13px; text-transform: uppercase;">Pergunta 2 de 3</span>
+                    <h3 style="margin: 10px 0 20px 0; font-size: 18px;">O que indica um mapa gerado por inteligência espectral NDVI através de Drones?</h3>
+                    <button class="option-btn" onclick="checkQuiz(2, false, this)">A) O valor de mercado da saca de soja nas bolsas de valores do dia.</button>
+                    <button class="option-btn" onclick="checkQuiz(2, true, this)">B) O nível de saúde, fotossíntese e vigor molecular da lavoura.</button>
+                </div>
+                <div id="q-stage3" style="display: none;">
+                    <span style="color: var(--tech-blue); font-weight: 700; font-size: 13px; text-transform: uppercase;">Pergunta 3 de 3</span>
+                    <h3 style="margin: 10px 0 20px 0; font-size: 18px;">Como os sensores de Internet das Coisas (IoT) operam no subsolo?</h3>
+                    <button class="option-btn" onclick="checkQuiz(3, true, this)">A) Medindo a umidade e minerais da terra para otimizar os insumos por gota de água.</button>
+                    <button class="option-btn" onclick="checkQuiz(3, false, this)">B) Eliminando pragas por meio de ondas de calor eletromagnéticas.</button>
+                </div>
+                <div id="q-score" style="display: none; text-align: center;">
+                    <i class="fa-solid fa-award" style="font-size: 48px; color: var(--accent-orange); margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 22px; margin-bottom: 10px;">Avaliação Finalizada!</h3>
+                    <p id="q-final-txt" style="font-weight: 600; font-size: 16px; margin-bottom: 20px;"></p>
+                    <button class="btn-submit" onclick="resetQuiz()" style="padding: 10px 25px;">Tentar Novamente</button>
+                </div>
+            </div>
+        </section>
+
+        <h2 class="section-title"><i class="fa-solid fa-bookmark"></i> Base Científica e Institucional</h2>
+        <section class="glass-panel" style="padding: 30px;">
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 15px;">Pesquise em portais públicos e governamentais fundamentados para enriquecer suas teses de sustentabilidade no Paraná:</p>
+            <a href="https://www.embrapa.br" target="_blank" class="resource-link">
+                <span><i class="fa-solid fa-graduation-cap"></i> Embrapa Inteligência Territorial</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+            <a href="https://sistemafaep.org.br" target="_blank" class="resource-link">
+                <span><i class="fa-solid fa-gavel"></i> Sistema FAEP / SENAR Paraná</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p><strong>Desenvolvido para as Diretrizes Interativas do Concurso Agrinho 2026</strong></p>
+        <p style="margin-top: 10px; opacity: 0.6;">Sustentabilidade, Ética, Governança ESG e Cidadania Digital Aplicada.</p>
+    </footer>
+
+    <script>
+        // CONFIGURAÇÃO DO GRÁFICO REALISTA (CHART.JS)
+        const ctx = document.getElementById('prodChart').getContext('2d');
+        const prodChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2021', '2022', '2023', '2024', '2025', '2026'],
+                datasets: [{
+                    label: 'Sacas por Hectare (Média Tecnológica)',
+                    data: [54, 58, 63, 69, 74, 82],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                }
+            }
+        });
+
+        // ABAS INTERATIVAS
+        function switchTab(id) {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('c' + i).style.display = i === id ? 'block' : 'none';
+                document.getElementById('t' + i).classList.toggle('active', i === id);
+            }
+        }
+
+        // SIMULADOR
+        function runSimulation() {
+            const area = parseFloat(document.getElementById('input-area').value);
+            const res = document.getElementById('sim-result');
+            if (isNaN(area) || area <= 0) {
+                res.style.color = '#ef4444';
+                res.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Digite uma métrica de área viável.';
+                return;
+            }
+            const saving = area * 25000;
+            res.style.color = 'var(--primary-green)';
+            res.innerHTML = `<i class="fa-solid fa-droplet"></i> Retenção anual projetada: <strong>${saving.toLocaleString('pt-BR')} Litros</strong> de água filtrada.`;
+        }
+
+        // GAMIFICAÇÃO DO QUIZ
+        let score = 0;
+        function checkQuiz(stage, correct, element) {
+            const container = element.parentElement;
+            const buttons = container.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (correct) {
+                element.style.background = "rgba(16, 185, 129, 0.2)";
+                element.style.borderColor = "#10b981";
+                score++;
+            } else {
+                element.style.background = "rgba(239, 68, 68, 0.2)";
+                element.style.borderColor = "#ef4444";
+            }
+
+            setTimeout(() => {
+                container.style.display = 'none';
+                if (stage < 3) {
+                    document.getElementById('q-stage' + (stage + 1)).style.display = 'block';
+                } else {
+                    document.getElementById('q-score').style.display = 'block';
+                    document.getElementById('q-final-txt').innerText = `Você dominou ${score} de 3 eixos tecnológicos do agronegócio moderno.`;
+                }
+            }, 1000);
+        }
+
+        function resetQuiz() {
+            score = 0;
+            document.getElementById('q-score').style.display = 'none';
+            document.getElementById('q-stage1').style.display = 'block';
+            document.querySelectorAll('.option-btn').forEach(b => {
+                b.disabled = false; b.style.background = ""; b.style.borderColor = "";
+            });
+        }
+
+        // LEITURA EM VOZ ALTA
+        function readPageContent() {
+            window.speechSynthesis.cancel();
+            let text = document.getElementById('header-section').innerText + ". ";
+            document.querySelectorAll('.metric-card').forEach(m => text += m.innerText + ". ");
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'pt-BR';
+            window.speechSynthesis.speak(speech);
+        }
+
+        // REGULAGEM DE FONTE
+        let baseSize = 16;
+        function adjustFont(dir) {
+            baseSize += (dir * 2);
+            baseSize = Math.max(14, Math.min(22, baseSize));
+            document.documentElement.style.setProperty('--font-base', baseSize + 'px');
+        }
+
+        // INTERRUPTOR DE TEMA
+        function toggleTheme() {
+            document.body.classList.toggle('modo-claro');
+            const isLight = document.body.classList.contains('modo-claro');
+            document.getElementById('theme-toggle').innerHTML = isLight ? 
+                `<i class="fa-solid fa-circle-half-stroke"></i> Modo Escuro` : 
+                `<i class="fa-solid fa-circle-half-stroke"></i> Modo Claro`;
+        }
+    </script>
+</body>
+</html>
