@@ -1,8 +1,13 @@
-# Conectando-o-Campo-ao-Futuro
-Apresentação do Projeto – Portal AgroTech
+# Conectando o Campo ao Futuro.
+ 
+Inteligência Artificial, Sustentabilidade e Agricultura de Precisão.
 
-O Portal AgroTech foi desenvolvido para o Concurso Agrinho 2026 com o objetivo de mostrar como a tecnologia pode contribuir para uma agricultura mais sustentável, eficiente e inovadora. A plataforma reúne informações sobre agricultura de precisão, inteligência artificial, drones, sensores IoT e práticas alinhadas aos princípios ESG, destacando a importância da inovação no campo.
+O Portal AgroTech foi desenvolvido para o Concurso Agrinho 2026 com o objetivo de demonstrar como a tecnologia pode contribuir para uma produção agrícola mais eficiente, sustentável e alinhada aos princípios ESG (Ambiental, Social e Governança).
 
-Além de conteúdos educativos, o projeto oferece recursos interativos, como um simulador de eficiência ecológica, gráficos informativos e um quiz sobre tecnologia e sustentabilidade no agronegócio. Também foram implementadas ferramentas de acessibilidade, garantindo uma experiência inclusiva para todos os usuários.
+O projeto apresenta uma experiência interativa que combina educação, inovação e conscientização ambiental, aproximando estudantes, produtores rurais e a sociedade das transformações tecnológicas no campo.
 
-O Portal AgroTech demonstra que a união entre tecnologia, conhecimento e responsabilidade ambiental é fundamental para aumentar a produtividade agrícola, preservar os recursos naturais e construir um futuro mais sustentável para o campo e para a sociedade.
+Por meio de conteúdos informativos e recursos interativos, o portal destaca a importância da agricultura de precisão, da inteligência artificial, dos sensores IoT e dos drones no monitoramento e na otimização das atividades agrícolas. Essas tecnologias permitem reduzir desperdícios, economizar recursos naturais e aumentar a produtividade de forma responsável.
+
+A plataforma também evidencia como a inovação pode contribuir para a preservação ambiental, auxiliando no uso eficiente da água, na redução de impactos ao meio ambiente e na tomada de decisões baseada em dados. Além disso, apresenta conceitos relacionados à sustentabilidade, à governança e à inclusão digital no meio rural.
+
+Com uma interface moderna, acessível e educativa, o Portal AgroTech busca inspirar a adoção de soluções tecnológicas que promovam o desenvolvimento sustentável do agronegócio, demonstrando que o futuro da agricultura depende da integração entre conhecimento, inovação e responsabilidade ambiental.
